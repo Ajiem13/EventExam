@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Event Exam</string>
+    <string name="title_home">Upcoming Event</string>
+    <string name="title_dashboard">Finishing Event</string>
+    <string name="title_notifications">Favorite Event</string>
+    <string name="title_setting">Setting</string>
+</resources>

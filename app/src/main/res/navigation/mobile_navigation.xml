@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_upcoming">
+
+    <fragment
+        android:id="@+id/navigation_upcoming"
+        android:name="com.example.eventexam.ui.upcomingEvent.UpcomingEventFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_upcoming_event" >
+        <action
+            android:id="@+id/action_navigation_upcoming_to_detailEventActivity"
+            app:destination="@id/detailEventActivity" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.example.eventexam.ui.finishingEvent.FinishingEventFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_finishing_event" />
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.example.eventexam.ui.favoriteEvent.FavoriteEventFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_favorite" />
+
+    <fragment
+        android:id="@+id/navigation_setting"
+        android:name="com.example.eventexam.ui.setting.SettingFragment"
+        android:label="@string/title_setting"
+        tools:layout="@layout/fragment_setting" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+    <activity
+        android:id="@+id/detailEventActivity"
+        android:name="com.example.eventexam.ui.DetailEventActivity"
+        android:label="activity_detail_event"
+        tools:layout="@layout/activity_detail_event" />
+</navigation>
