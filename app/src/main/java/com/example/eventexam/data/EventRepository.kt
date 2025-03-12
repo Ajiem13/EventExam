@@ -50,7 +50,7 @@ class EventRepository(private val apiService: ApiService, private val eventDao: 
 
         eventDao.insertEvent(safeEvent)
 
-        // ✅ **Cek apakah event benar-benar tersimpan**
+
         val allFavorites = getFavoriteEvents()
         Log.d("EventRepositoryXXX", "Data favorit setelah insert: $allFavorites")
     }
@@ -62,7 +62,7 @@ class EventRepository(private val apiService: ApiService, private val eventDao: 
     }
 
     suspend fun isEventFavorite(eventId: Int): Boolean {
-        return withContext(Dispatchers.IO) { // ✅ Pindahkan ke IO Thread
+        return withContext(Dispatchers.IO) {
             val event = eventDao.getEventById(eventId)
             Log.d("EventRepository", "Checking favorite for event ID: $eventId, Found: ${event != null}")
             event != null

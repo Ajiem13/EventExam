@@ -37,13 +37,13 @@ class FavoriteEventFragment : Fragment() {
         binding.rvNotification.layoutManager = LinearLayoutManager(requireContext())
         binding.rvNotification.adapter = adapter
 
-        // ✅ Observe LiveData dari ViewModel
+
         viewModel.favoriteEvents.observe(viewLifecycleOwner) { favorites ->
             if (favorites == null) {
                 Log.e("FavoriteFragment", "Error: Data favorit masih NULL!")
             } else {
                 Log.d("FavoriteFragment", "Data Favorit: $favorites")
-                adapter.submitList(favorites) // ✅ Masukkan data ke RecyclerView
+                adapter.submitList(favorites)
             }
         }
 

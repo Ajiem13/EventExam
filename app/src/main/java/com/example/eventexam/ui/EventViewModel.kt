@@ -42,7 +42,7 @@ class EventViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             try {
                 val events = repository.getUpcomingEvents()
-                Log.d("API_RESPONSE", "Data dari API: $events") // Tambahkan log ini
+                Log.d("API_RESPONSE", "Data dari API: $events")
                 _upcomingEvents.postValue(events)
             } catch (e: Exception) {
                 Log.e("API_ERROR", "Gagal mengambil data", e)
@@ -90,7 +90,7 @@ class EventViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun isEventFavorite(eventId: Int, callback: (Boolean) -> Unit) {
-        viewModelScope.launch(Dispatchers.IO) { // ✅ Jalankan di IO Thread
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val result = repository.isEventFavorite(eventId)
                 withContext(Dispatchers.Main) { // ✅ Kembali ke Main Thread untuk UI

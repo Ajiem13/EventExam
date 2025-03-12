@@ -12,24 +12,6 @@ import com.example.eventexam.data.remote.response.ListEventsItem
 
 @Dao
 interface EventDao {
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun insert(event:EventEntity)
-//
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun insertAll(eve)
-
-//
-//
-//
-//        @Insert(onConflict = OnConflictStrategy.REPLACE)
-//        suspend fun insertFavorite(event: EventEntity)
-//
-//        @Delete
-//        suspend fun deleteFavorite(event: EventEntity)
-//
-//        @Query("SELECT * FROM events")
-//        fun getAllFavorites(): List<EventEntity>
-
 
         @Insert(onConflict = OnConflictStrategy.REPLACE)
         suspend fun insertEvent(event: EventEntity)

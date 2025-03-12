@@ -71,7 +71,6 @@ class DetailEventActivity : AppCompatActivity() {
             }
         }
 
-
         viewModel.isEventFavorite(eventId) { isFav ->
             isFavorite = isFav
             Log.d("DetailEventActivity", "Event ID: $eventId, Favorite: $isFav") // 🔍 Debugging Log
@@ -81,7 +80,7 @@ class DetailEventActivity : AppCompatActivity() {
 
     }
 
-    fun convertHtmlToText(html: String): String {
+    private fun convertHtmlToText(html: String): String {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).toString()
         } else {
