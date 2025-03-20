@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.eventexam.databinding.FragmentFavoriteBinding
 import com.example.eventexam.ui.DetailEventActivity
 
-
 class FavoriteEventFragment : Fragment() {
     private lateinit var binding: FragmentFavoriteBinding
     private val viewModel: EventViewModel by viewModels()

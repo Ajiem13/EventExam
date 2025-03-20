@@ -12,6 +12,4 @@ class SettingViewModelFactory(private val pref: SettingPreferences) : ViewModelP
         }
         throw IllegalArgumentException("Unknown ViewModel Class: " + modelClass.name)
     }
-
-
 }

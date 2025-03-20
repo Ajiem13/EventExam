@@ -20,13 +20,14 @@ class EventRepository(private val apiService: ApiService, private val eventDao: 
         return apiService.getEvents(0).listEvents
     }
 
-    suspend fun getEventDetail(eventId: Int): EventEntity? {
-        val response = apiService.getEventDetail(eventId)
-        Log.d("EventRepository", "Data event dari API: id=${response?.id}, name=${response?.name}, description=${response?.description} gambar=${response.imageLogo}")
-
-        return response
+    suspend fun getNearestEvent(): ListEventsItem? {
+        return try {
+            val response = apiService.getNearestEvent(active = -1, limit = 1)
+            response.listEvents.firstOrNull()
+        } catch (e: Exception) {
+            null
+        }
     }
-
 
    fun getFavoriteEvents(): LiveData<List<EventEntity>> {
         return eventDao.getFavoriteEvents()
@@ -42,20 +43,17 @@ class EventRepository(private val apiService: ApiService, private val eventDao: 
 
         val safeEvent = EventEntity(
             id = event.id,
-            name = event.name ?: "Unknown Event",
-            description = event.description ?: "No description",
-            summary = event.summary ?: "No summary",
-            imageLogo = event.imageLogo ?: ""
+            name = event.name,
+            description = event.description,
+            summary = event.summary,
+            imageLogo = event.imageLogo
         )
 
         eventDao.insertEvent(safeEvent)
 
-
         val allFavorites = getFavoriteEvents()
         Log.d("EventRepositoryXXX", "Data favorit setelah insert: $allFavorites")
     }
-
-
 
     suspend fun removeFromFavorites(event: EventEntity) {
         eventDao.deleteEvent(event)
@@ -68,9 +66,5 @@ class EventRepository(private val apiService: ApiService, private val eventDao: 
             event != null
         }
     }
-
-
-
-
 
 }

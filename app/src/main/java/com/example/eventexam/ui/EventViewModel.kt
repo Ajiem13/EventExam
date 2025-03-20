@@ -23,10 +23,10 @@ class EventViewModel(application: Application) : AndroidViewModel(application) {
     private val _finishedEvents = MutableLiveData<List<ListEventsItem>>()
     val finishedEvents: LiveData<List<ListEventsItem>> get() = _finishedEvents
 
-    private val _selectedEvent = MutableLiveData<EventEntity?>()
-    val selectedEvent: LiveData<EventEntity?> get() = _selectedEvent
-
     lateinit var favoriteEvents: LiveData<List<EventEntity>>
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
 
     init {
@@ -38,11 +38,13 @@ class EventViewModel(application: Application) : AndroidViewModel(application) {
 
     }
 
-    fun loadUpcomingEvents() {
+    private fun loadUpcomingEvents() {
         viewModelScope.launch {
+            _isLoading.postValue(true)
             try {
                 val events = repository.getUpcomingEvents()
                 Log.d("API_RESPONSE", "Data dari API: $events")
+                _isLoading.postValue(false)
                 _upcomingEvents.postValue(events)
             } catch (e: Exception) {
                 Log.e("API_ERROR", "Gagal mengambil data", e)
@@ -51,26 +53,19 @@ class EventViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun loadFinishedEvents() {
+    private fun loadFinishedEvents() {
         viewModelScope.launch {
+            _isLoading.postValue(true)
             try {
                 val events = repository.getFinishedEvents()
                 Log.d("VIEWMODEL_DATA", "Data diterima di ViewModel: $events")
+                _isLoading.postValue(false)
                 _finishedEvents.postValue(events)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
     }
-
-    fun getEventDetail(id: Int) {
-        viewModelScope.launch {
-            val event = repository.getEventDetail(id)
-            Log.d("EventViewModelgetDetail", "Event dari repository: $event")
-            _selectedEvent.value = event
-        }
-    }
-
 
     fun addToFavorites(event: EventEntity?) {
         viewModelScope.launch {
@@ -82,7 +77,6 @@ class EventViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-
     fun removeFromFavorites(event: EventEntity) {
         viewModelScope.launch {
             repository.removeFromFavorites(event)
@@ -93,7 +87,7 @@ class EventViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val result = repository.isEventFavorite(eventId)
-                withContext(Dispatchers.Main) { // ✅ Kembali ke Main Thread untuk UI
+                withContext(Dispatchers.Main) {
                     Log.d("EventViewModel", "isEventFavorite() -> Event ID: $eventId, Result: $result")
                     callback(result)
                 }
@@ -102,9 +96,5 @@ class EventViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
-
-
-
-
 
 }

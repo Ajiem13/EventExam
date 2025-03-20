@@ -1,21 +1,18 @@
 package com.example.eventexam.ui.adapter
 
-
-
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.eventexam.data.database.EventEntity
 import com.example.eventexam.data.remote.response.ListEventsItem
 import com.example.eventexam.databinding.ItemEventBindingBinding
 import com.example.eventexam.ui.DetailEventActivity
 
 class AdapterEvent(private var events: List<ListEventsItem>) : RecyclerView.Adapter<AdapterEvent.EventViewHolder>() {
 
-    inner class EventViewHolder(val binding: ItemEventBindingBinding) :
+    inner class EventViewHolder(private val binding: ItemEventBindingBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(event: ListEventsItem) {
             binding.tvEventTitle.text = event.name
@@ -42,8 +39,6 @@ class AdapterEvent(private var events: List<ListEventsItem>) : RecyclerView.Adap
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         holder.bind(events[position])
-
-
     }
 
     override fun getItemCount(): Int = events.size

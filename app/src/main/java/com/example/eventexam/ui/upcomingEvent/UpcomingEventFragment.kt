@@ -26,27 +26,30 @@ class UpcomingEventFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//         Inisialisasi adapter dengan list kosong
         eventAdapter = AdapterEvent(emptyList())
 
-        // Attach adapter ke RecyclerView lebih awal
         binding.rvUpcomingEvents.apply {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
             adapter = eventAdapter
         }
 
-        // Amati data dari ViewModel dan perbarui adapter saat data tersedia
         viewModel.upcomingEvents.observe(viewLifecycleOwner) { events ->
-            Log.d("VIEWMODEL_DATA", "Data diterima di Fragment: $events") // Tambahkan log ini
+            Log.d("VIEWMODEL_DATA", "Data diterima di Fragment: $events")
             eventAdapter.updateList(events)
             if (events.isEmpty()) {
                 Toast.makeText(context, "Tidak ada event tersedia", Toast.LENGTH_SHORT).show()
-            } else {
-//                binding.rvUpcomingEvents.adapter = AdapterEvent(events) { event ->
-//            }
             }
         }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.progressBar.visibility = View.GONE
+            }
+        }
+
     }
 }
 

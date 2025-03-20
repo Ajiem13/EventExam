@@ -2,7 +2,6 @@ package com.example.eventexam.ui
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.text.Html
@@ -16,7 +15,6 @@ import com.example.eventexam.R
 import com.example.eventexam.data.database.EventEntity
 import com.example.eventexam.data.remote.response.ListEventsItem
 import com.example.eventexam.databinding.ActivityDetailEventBinding
-import com.google.android.material.snackbar.Snackbar
 
 class DetailEventActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailEventBinding
@@ -32,36 +30,33 @@ class DetailEventActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // Ambil data dari Intent
         val data = intent.getParcelableExtra<Parcelable>("EXTRA_DATA")
 
         if (data != null) {
             when(data){
                 is EventEntity -> {
                     eventId = data.id
-                    Glide.with(this).load(data?.imageLogo).into(binding.imgEvent)
-                    binding.tvEventTitle.text = data?.name
+                    Glide.with(this).load(data.imageLogo).into(binding.imgEvent)
+                    binding.tvEventTitle.text = data.name
                     binding.tvEventDescription.text = convertHtmlToText(data.description)
-                    binding.tvEventDateLocation.text = data?.summary
+                    binding.tvEventDateLocation.text = data.summary
                 }
                 is ListEventsItem -> {
                     eventData = data
                     eventId = data.id
-                    Glide.with(this).load(data?.imageLogo).into(binding.imgEvent)
-                    binding.tvEventTitle.text = data?.name
+                    Glide.with(this).load(data.imageLogo).into(binding.imgEvent)
+                    binding.tvEventTitle.text = data.name
                     binding.tvEventDescription.text = convertHtmlToText(data.description)
-                    binding.tvEventDateLocation.text = data?.summary
+                    binding.tvEventDateLocation.text = data.summary
                 }
                 else -> {}
             }
-
         }
 
         binding.btnRegister.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(eventData?.link))
             startActivity(intent)
         }
-
 
         binding.btnFavorite.setOnClickListener {
             if (isFavorite) {
@@ -81,11 +76,7 @@ class DetailEventActivity : AppCompatActivity() {
     }
 
     private fun convertHtmlToText(html: String): String {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).toString()
-        } else {
-            Html.fromHtml(html).toString()
-        }
+        return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).toString()
     }
 
 
