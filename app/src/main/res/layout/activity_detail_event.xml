@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true">
 
     <LinearLayout
@@ -12,7 +10,6 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Gambar Event -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="300dp">
@@ -24,7 +21,6 @@
                 android:scaleType="centerCrop"
                 android:background="?android:attr/selectableItemBackground" />
 
-            <!-- Tombol Favorite -->
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnFavorite"
                 android:layout_width="wrap_content"
@@ -38,10 +34,7 @@
                 android:tint="@color/white"
                 android:src="@drawable/ic_favorite"
                  />
-
         </RelativeLayout>
-
-        <!-- Nama Event -->
         <TextView
             android:id="@+id/tvEventTitle"
             android:layout_width="match_parent"
@@ -50,37 +43,29 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:paddingTop="8dp" />
-
-        <!-- Tanggal & Lokasi -->
         <TextView
             android:id="@+id/tvEventDateLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="📅 1 Januari 2024 | 📍 Jakarta"
             android:textSize="14sp"
             android:textColor="@android:color/darker_gray"
             android:paddingBottom="8dp" />
 
-        <!-- Deskripsi Event -->
         <TextView
             android:id="@+id/tvEventDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Deskripsi event akan tampil di sini dengan teks yang cukup panjang untuk memberikan detail informasi."
             android:textSize="14sp"
             android:lineSpacingExtra="4dp" />
 
-        <!-- Informasi Tambahan -->
         <TextView
             android:id="@+id/tvAdditionalInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Informasi tambahan tentang event seperti speaker, agenda, dan lain-lain."
             android:textSize="14sp"
             android:lineSpacingExtra="4dp"
             android:paddingTop="8dp"
             />
-
 
         <Button
             android:id="@+id/btnRegister"
@@ -90,6 +75,5 @@
             android:backgroundTint="@color/purple_500"
             android:textColor="@android:color/white"
             android:layout_marginTop="16dp" />
-
     </LinearLayout>
 </ScrollView>

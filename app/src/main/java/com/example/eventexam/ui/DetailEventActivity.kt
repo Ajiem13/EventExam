@@ -68,11 +68,9 @@ class DetailEventActivity : AppCompatActivity() {
 
         viewModel.isEventFavorite(eventId) { isFav ->
             isFavorite = isFav
-            Log.d("DetailEventActivity", "Event ID: $eventId, Favorite: $isFav") // 🔍 Debugging Log
+            Log.d("DetailEventActivity", "Event ID: $eventId, Favorite: $isFav")
             changeFavoriteIcon(isFavorite)
         }
-
-
     }
 
     private fun convertHtmlToText(html: String): String {
