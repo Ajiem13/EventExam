@@ -24,11 +24,9 @@ class AdapterEvent(private var events: List<ListEventsItem>) : RecyclerView.Adap
                 val intent = Intent(binding.root.context, DetailEventActivity::class.java).apply {
                     putExtra("EXTRA_DATA", event)
                     Log.d("Adapter", "Event yang diklik: ID=${event.id}, Name=${event.name}")
-
                 }
                 binding.root.context.startActivity(intent)
             }
-
         }
     }
 

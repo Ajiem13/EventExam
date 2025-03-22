@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
@@ -51,12 +50,10 @@ class SettingFragment : Fragment() {
             setDailyReminder(isChecked)
             sharedPreferences.edit().putBoolean("daily_reminder", isChecked).apply()
 
-            if (isChecked) {
-                Toast.makeText(requireContext(), "Daily Reminder Aktif!", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(requireContext(), "Daily Reminder Dinonaktifkan!", Toast.LENGTH_SHORT).show()
-            }
+            val message = if (isChecked) "Daily Reminder Aktif!" else "Daily Reminder Dinonaktifkan!"
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }
+
         return binding.root
     }
 
@@ -72,28 +69,17 @@ class SettingFragment : Fragment() {
         val workManager = WorkManager.getInstance(requireContext())
 
         if (enable) {
-            workManager.getWorkInfosForUniqueWork("DailyReminderWork").get().let { workInfos ->
-                val isAlreadyScheduled = workInfos?.any { it.state == WorkInfo.State.ENQUEUED } == true
-                if (!isAlreadyScheduled) {
-                    val workRequest = PeriodicWorkRequestBuilder<DailyReminderWorker>(1, TimeUnit.DAYS)
-                        .setInitialDelay(30, TimeUnit.SECONDS)
-                        .build()
+            val workRequest = PeriodicWorkRequestBuilder<DailyReminderWorker>(1, TimeUnit.DAYS)
+                .setInitialDelay(10, TimeUnit.SECONDS)
+                .build()
 
-                    workManager.enqueueUniquePeriodicWork(
-                        "DailyReminderWork",
-                        ExistingPeriodicWorkPolicy.KEEP,
-                        workRequest
-                    )
-                    Toast.makeText(requireContext(), "Daily Reminder Aktif!", Toast.LENGTH_SHORT).show()
-                } else {
-                    Log.d("WorkManagerStatus", "WorkManager sudah berjalan, tidak menambahkan ulang!")
-                }
-            }
+            workManager.enqueueUniquePeriodicWork(
+                "DailyReminderWork",
+                ExistingPeriodicWorkPolicy.REPLACE,
+                workRequest
+            )
         } else {
             workManager.cancelUniqueWork("DailyReminderWork")
-            Toast.makeText(requireContext(), "Daily Reminder Dinonaktifkan!", Toast.LENGTH_SHORT).show()
-            Log.d("WorkManagerStatus", "WorkManager berhasil dihentikan!")
         }
     }
-
 }

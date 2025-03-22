@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
@@ -19,6 +20,7 @@ class DailyReminderWorker(context: Context, workerParams: WorkerParameters) :
     CoroutineWorker(context, workerParams) {
 
     override suspend fun doWork(): Result {
+        Log.d("DailyReminderWorker", "WorkManager Sedang Berjalan!")
         val repository = EventRepository(ApiConfig.getApiService(), EventDatabase.getDatabase(applicationContext).eventDao())
         val event = repository.getNearestEvent()
 
